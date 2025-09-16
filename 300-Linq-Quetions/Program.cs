@@ -530,202 +530,382 @@ namespace _300_Linq_Quetions
 			#endregion
 
 			#region 51. Get the names of all employees who are not managers
+			//var employees = Employees.Where(x => x.ReportsTo != null)
+			//                         .Select(x => new { x.FirstName, x.LastName });
 
+			//foreach (var item in employees)
+			//    Console.WriteLine(item);
 			#endregion
 
 			#region 52. List orders where the ship country is "Mexico"
-			
+			//var orders = Orders.Where(x => x.ShipCountry == "Mexico");
+
+			//foreach (var item in orders)
+			//    Console.WriteLine(item);
 			#endregion
 
 			#region 53. Retrieve all products with a quantity per unit description containing "bottle"
-		
+			//var products = Products.Where(x => x.QuantityPerUnit.Contains("bottle"));
+
+			//foreach (var item in products)
+			//    Console.WriteLine(item);
 			#endregion
 
 			#region 54. Find the top 5 products with the highest unit price
-			
+			//var products = Products.OrderByDescending(x => x.UnitPrice)
+			//                       .Take(5);
+
+			//foreach (var item in products)
+			//    Console.WriteLine(item);
 			#endregion
 
 			#region 55. Get all customers who have a contact title of "Owner"
-			
+			//var customers = Customers.Where(x => x.ContactTitle == "Owner");
+
+			//foreach (var item in customers)
+			//    Console.WriteLine(item);
 			#endregion
 
 			#region 56. List all employees who have their last name starting with "S"
-			
+			//var employees = Employees.Where(x => x.LastName.StartsWith("S"));		
+
+			//foreach (var item in employees)
+			//    Console.WriteLine(item);
 			#endregion
 
 			#region 57. Retrieve orders placed in the month of December
-			
+			//var orders = Orders.Where(x => x.OrderDate.Month == 12);
+
+			//foreach (var item in orders)
+			//    Console.WriteLine(item);
 			#endregion
 
 			#region 58. Find products that are neither discontinued nor have a reorder level of 0
-			
+			//var products = Products.Where(x => !x.Discontinued && x.ReorderLevel > 0);
+
+			//foreach (var item in products)
+			//    Console.WriteLine(item);
 			#endregion
 
 			#region 59. Get the names of suppliers who have their country listed as "UK"
-			
+			//var suppliers = Suppliers.Where(x => x.Country == "UK")
+			//                         .Select(x => x.CompanyName);
+
+			//foreach (var item in suppliers)
+			//    Console.WriteLine(item);
 			#endregion
 
 			#region 60. List all orders with a ship city of "London" and a freight cost greater than $30
-			
+			//var orders = Orders.Where(x => x.ShipCity == "London" && x.Freight > 30);
+
+			//foreach (var item in orders)
+			//    Console.WriteLine(item);
 			#endregion
 
 			#region 61. Retrieve all employees who were hired in 1997
-			
+			//var employees = Employees.Where(x => !string.IsNullOrEmpty(x.HireDate) && DateTime.Parse(x.HireDate).Year == 1997);
+			//foreach (var item in employees)
+			//    Console.WriteLine(item);
 			#endregion
 
 			#region 62. Find products that have been ordered by more than 10 different customers
-			
+			//var products = Products.Where(x =>
+			//				Orders.Where(o => OrderDetails.Any(od => od.ProductID == x.ProductID))
+			//					  .Select(o => o.CustomerID).Distinct().Count() > 10).Select(x => x.ProductID);
+
+			//foreach (var item in products)
+			//    Console.WriteLine(item);
 			#endregion
 
 			#region 63. Get all categories that do not have any discontinued products
+			//var categories = Categories.Where(x => !Products.Any(p => p.CategoryID == x.CategoryID && p.Discontinued));
 
+			//foreach (var item in categories)
+			//    Console.WriteLine(item);
+			#endregion
 
 			#region 64. List all customers who have a region specified
-			
+			//var customers = Customers.Where(x => !string.IsNullOrEmpty(x.Region));
+
+			//foreach (var item in customers)
+			//    Console.WriteLine(item);
 			#endregion
 
 			#region 65. Retrieve products where the unit price is greater than the average unit price
-			
+			//var average = Products.Average(x => x.UnitPrice);
+
+			//var products = Products.Where(x => x.UnitPrice > average);
+
+			//foreach (var item in products)
+			//    Console.WriteLine(item);
 			#endregion
 
 			#region 66. Find the supplier with the most products
-			
+			//var supplierData = Products.GroupBy(x => x.SupplierID)
+			//                        .OrderByDescending(g => g.Count())
+			//                        .Select(g => new { SupplierId = g.Key, Count = g.Count() })
+			//                        .FirstOrDefault();
+
+			//Console.WriteLine(supplierData);
 			#endregion
 
 			#region 67. Get all orders where the order date is after November 15, 1997
-			
+			//var orders = Orders.Where(x => x.OrderDate > new DateTime(1997, 11, 15));
+
+			//foreach (var item in orders)
+			//    Console.WriteLine(item);
 			#endregion
 
 			#region 68. List products with a unit price that is a multiple of 5
-			
+			//var products = Products.Where(x => x.UnitPrice % 5 == 0);
+
+			//foreach (var item in products)
+			//    Console.WriteLine(item);
 			#endregion
 
 			#region 69. Retrieve the names of customers who have placed at least 3 orders
-			
+			//var customers = Customers.Where(x => Orders.Count(o => o.CustomerID == x.CustomerID) >= 3)
+			//						 .Select(x => x.CompanyName);
+
+			//foreach (var item in customers)
+			//	Console.WriteLine(item);
+
+
+			//var cusomers= from o in Orders
+			//			  group o by o.CustomerID
+			//			  into g
+			//			  where(g.Count()>=3)
+			//			  join c in Customers
+			//			  on g.Key equals c.CustomerID
+			//			  select c.CompanyName;
+			//foreach (var item in cusomers)
+			//    Console.WriteLine(item);
 			#endregion
 
 			#region 70. Find all orders shipped by "United Package"
-			
+			//var orders = Orders.Where(x => Shippers.Any(s => s.ShipperID == x.ShipperID && s.CompanyName == "United Package"));
+
+			//foreach (var item in orders)
+			//    Console.WriteLine(item);
 			#endregion
 
 			#region 71. Get the details of orders that were shipped in "Berlin"
-			
+			//var orders = Orders.Where(x => x.ShipCity == "Berlin");
+
+			//foreach (var item in orders)
+			//    Console.WriteLine(item);
 			#endregion
 
 			#region 72. List products that have been discontinued and have a unit price greater than $20
-			
+			//var products = Products.Where(x => x.Discontinued && x.UnitPrice > 20);
+			//foreach (var item in products)
+			//    Console.WriteLine(item);
 			#endregion
 
 			#region 73. Retrieve employees who have not shipped any orders
-			
+			//var employees = Employees.Where(x => !Orders.Any(o => o.EmployeeID == x.EmployeeID));
+
+			//foreach (var item in employees)
+			//	Console.WriteLine(item);
 			#endregion
 
 			#region 74. Find customers who have orders with a discount applied
-			
+			//var customers = Customers.Where(x => Orders.Any(o => o.CustomerID == x.CustomerID
+			//				&& OrderDetails.Any(od => od.OrderID == o.OrderID && od.Discount > 0)));
+
+			//foreach (var item in customers)
+			//	Console.WriteLine(item);
 			#endregion
 
 			#region 75. Get the top 3 most expensive products
-			
+			//var products = Products.OrderByDescending(x => x.UnitPrice)
+			//                       .Take(3);
+
+			//products = (from product in Products
+			//           orderby product.UnitPrice descending
+			//           select product).Take(3);
+
+			//foreach (var item in products)
+			//    Console.WriteLine(item);
 			#endregion
 
 			#region 76. List all suppliers with a home page
-			
+			//var subpplirs = Suppliers.Where(s => !string.IsNullOrEmpty(s.HomePage));
+			//foreach (var item in subpplirs)
+			//	Console.WriteLine(item.HomePage);
 			#endregion
 
 			#region 77. Retrieve orders where the freight cost is between $10 and $50
-			
+			//var orders= Orders.Where(o=>o.Freight>=10&&o.Freight<=50);
+			// foreach (var item in orders)
+			//     Console.WriteLine(item);
 			#endregion
 			#region 78. Find products supplied by a supplier with the name "Exotic Liquids"
-		
+			//var products=Products.Where(p=>Suppliers.Any(s=>s.SupplierID==p.SupplierID&&s.CompanyName== "Exotic Liquids"));
+			// foreach (var item in products)
+			//    Console.WriteLine(item);
 			#endregion
 
 			#region 79. Get all orders that were required before the order date
-			
+			//var orders = Orders.Where(o => o.RequiredDate < o.OrderDate);
+			// foreach (var item in orders)
+			//    Console.WriteLine(item);
 			#endregion
 
 
 			#region 80. List products that have been ordered at least once in each year of the 1990s
-			
+			//var ninetiesProductIds = (from od in OrderDetails
+			//						  join o in Orders on od.OrderID equals o.OrderID
+			//						  where o.OrderDate.Year >= 1990 && o.OrderDate.Year <= 1999
+			//						  group o.OrderDate.Year by od.ProductID into productYears
+			//						  where productYears.Distinct().Count() == 10 // Must have orders in all 10 years
+			//						  select productYears.Key).ToList();
+			//var products = Products.Where(p => ninetiesProductIds.Contains(p.ProductID));
+
+
+			//foreach (var item in products)
+			//{
+			//	Console.WriteLine(item);
+			//}
 			#endregion
 
 			#region 81. Retrieve all orders where the ship city is "Seattle" or "Portland"
-			
+			//var orders=Orders.Where(o=>o.ShipCity== "Seattle" || o.ShipCity== "Portland");
+			//foreach (var item in orders)
+			//{
+			//	Console.WriteLine(item);
+			//}
 			#endregion
 
 			#region 82. Find employees who have more than one phone number listed
-			
+			//var employeesWithMultiplePhones = Employees.Where(e =>
+			//!string.IsNullOrEmpty(e.HomePhone) &&
+			//(e.HomePhone.Contains(",") || e.HomePhone.Contains("/")))
+			//.ToList();
+			//foreach (var item in employeesWithMultiplePhones)
+			//{
+			//	Console.WriteLine(item);
+			//}
 			#endregion
 
 			#region 83. Get the details of orders placed by the customer "ANATR"
-			
+			//var orders=Orders.Where(o=>o.CustomerID=="ANATR");
+			//foreach (var item in orders)
+			//{
+			//	Console.WriteLine(item);
+			//}
 			#endregion
 
 			#region 84. List products with a quantity per unit description that includes "can"
-			
+			//var products=Products.Where(p=>!string.IsNullOrEmpty(p.QuantityPerUnit) && p.QuantityPerUnit.ToLower().Contains("can"));
+			//foreach(var item in products)
+			//	Console.WriteLine(item);
 			#endregion
 
 			#region 85. Retrieve the names of all customers who have their contact name starting with "A"
-			
+			//var customer=Customers.Where(c=> !string.IsNullOrEmpty(c.ContactName) && c.ContactName.StartsWith('A'))
+			//	.Select(c=>c.ContactName);
+			//foreach(var item in customer)
+			//	Console.WriteLine(item);
 			#endregion
 
 			#region 86. Find all products with a unit price between $15 and $25
-			
+			//var products=Products.Where(p=>p.UnitPrice>=15&&p.UnitPrice<=25);
+			// foreach(var item in products)
+			//	Console.WriteLine(item);
 			#endregion
 
 			#region 87. Get all orders that were shipped in the year 1997 but required before 1996
-			
+			//var orders=Orders.Where(o=>o.ShippedDate.HasValue&&o.ShippedDate.Value.Year==1997&&o.RequiredDate.Year<1996);
+			//foreach (var item in orders)
+			//	Console.WriteLine(item);
 			#endregion
 
 			#region 88. List all categories with at least one product that is not discontinued
-			
+			//var categories=Categories.Where(c=>Products.Any(p=>p.CategoryID==c.CategoryID&&!p.Discontinued));
+			//foreach (var item in categories)
+			//	Console.WriteLine(item);
 			#endregion
 
 			#region 89. Retrieve the names of suppliers who do not have a fax number
-			
+			//var supliers=Suppliers.Where(s=>!string.IsNullOrEmpty(s.Fax)).Select(s=>s.ContactName);
+			//foreach (var item in supliers)
+			//	Console.WriteLine(item);
 			#endregion
 
 			#region 90. Find customers who live in cities starting with "S"
-			
+			//var customers=Customers.Where(s=>s.City.StartsWith("S"));
+			//foreach (var item in customers)
+			//	Console.WriteLine(item);
 			#endregion
 
 			#region 91. Get the total number of products for each supplier
-			
+			//var products=Products.Where(s=>s.SupplierID.HasValue)
+			//	.GroupBy(p=>p.SupplierID)
+			//	.Select(g => new { SupplierID=g.Key, SupplierName=Suppliers.FirstOrDefault(s=>s.SupplierID==g.Key)?.ContactName, ProductCount = g.Count()});
+			//foreach (var item in products)
+			//	Console.WriteLine($"{item.SupplierName} {item.ProductCount}");
 			#endregion
 
 			#region 92. List all orders where the freight cost is exactly $15
-			
+			//var orders=Orders.Where(o=>o.Freight==15);
+			//foreach (var item in orders)
+			//Console.WriteLine(item);
 			#endregion
 
 			#region 93. Retrieve employees who have a title containing "Manager"
-			
+			//var employees=Employees.Where(e=>e.Title.Contains("Manager"));
+			// foreach (var item in employees)
+			// Console.WriteLine(item);
 			#endregion
 
 			#region 94. Find products with a unit price that is not an integer
-			
+			//var products=Products.Where(p=>p.UnitPrice%2!=0);
+			//var productsWithNonIntegerPrice = Products.Where(p =>
+			//	p.UnitPrice != Math.Floor(p.UnitPrice));
 			#endregion
 
 			#region 95. Get the names of all employees whose last name is "Davies"
-			
+			//var employees=Employees.Where(e=>e.LastName == "Davies");
+			//foreach (var item in employees)
+			//	Console.WriteLine(item);
 			#endregion
 
 			#region 96. List all orders shipped by "Federal Shipping"
-			
+			//var federalShippingOrders = from o in Orders
+			//							join s in Shippers
+			//							on o.ShipperID equals s.ShipperID
+			//							where(s.CompanyName.Contains("Federal Shipping"))
+			//							select o;
+			//var federalShippingOrders=Orders.Where(o=>Shippers.Any(s=>s.ShipperID==o.ShipperID&&s.CompanyName.Contains("Federal Shipping")));
+			//foreach (var item in federalShippingOrders)
+			//	Console.WriteLine(item);
 			#endregion
 
 			#region 97. Retrieve products with a unit price less than $25 and greater than $10
-			
+			//var products = Products.Where(p =>p.UnitPrice > 10 && p.UnitPrice < 25)
+			//	foreach (var item in products)
+			//	Console.WriteLine(item);
 			#endregion
 
 			#region 98. Find all customers with the same city as "Berlin"
-			
+			//var berlinCustomers = Customers.Where(c =>!string.IsNullOrEmpty(c.City) && c.City.Equals("Berlin");
+			//foreach (var item in berlinCustomers)
+			//	Console.WriteLine(item);
 			#endregion
 
 			#region 99. Get the details of orders where the required date is within a week of the order date
-		
+			//var ordersWithinOneWeek = Orders.Where(o =>
+			//(o.RequiredDate - o.OrderDate).TotalDays <= 7 &&
+			//(o.RequiredDate - o.OrderDate).TotalDays >= 0);
+			//foreach (var item in ordersWithinOneWeek)
+			//	Console.WriteLine(item);
 			#endregion
 
 			#region 100. List all products that have been ordered but have a quantity per unit of "6 boxes"
-		
+			//	var products=Products.Where(p=>OrderDetails.Any(od=>od.ProductID==p.ProductID) && p.QuantityPerUnit== "6 boxes");
+			//foreach (var item in products)
+			//	Console.WriteLine(item.ProductID);
 
 			#endregion
 
